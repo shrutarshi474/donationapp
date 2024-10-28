@@ -1,0 +1,71 @@
+import React, { useState } from "react";
+import { View, TextInput, Button, StyleSheet, Text, Image } from "react-native";
+import { firebase } from "../firebaseConfig";
+
+export default function SignInScreen({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignIn = async () => {
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      navigation.navigate("Dashboard");
+    } catch (error) {
+      console.error(error);
+      alert("Error signing in: " + error.message);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Image
+        source={{
+          uri: "https://i.ibb.co/kgvh4Tc/Whats-App-Image-2024-10-20-at-6-21-43-PM.jpg",
+        }} // Replace with your actual logo URL or image source
+        style={styles.logo}
+      />
+      <Text>Sign In</Text>
+      <TextInput
+        placeholder="Email Address"
+        value={email}
+        onChangeText={setEmail}
+        style={styles.input}
+        keyboardType="email-address"
+      />
+      <TextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        style={styles.input}
+        secureTextEntry
+      />
+      <Button title="Sign In" color="green" onPress={handleSignIn} />
+      <Button title="Skip" onPress={() => navigation.navigate("Dashboard")} />
+      <Text onPress={() => navigation.navigate("SignUp")} style={styles.link}>
+        Don't have an account? Sign Up
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 16,
+    backgroundColor: "#fff",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 8,
+    marginBottom: 16,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    marginBottom: 20,
+    marginLeft: 120,
+  },
+  link: { color: "blue", marginTop: 10, textAlign: "center" },
+});

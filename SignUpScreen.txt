@@ -1,0 +1,93 @@
+import React, { useState } from "react";
+import { View, TextInput, Button, StyleSheet, Text, Image } from "react-native";
+import { firebase } from "../firebaseConfig";
+
+export default function SignUpScreen({ navigation }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignUp = async () => {
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long");
+    } else {
+      // You can add your sign-up logic here
+      try {
+        const userCredential = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password);
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(userCredential.user.uid)
+          .set({
+            fullName,
+            email,
+          });
+        navigation.navigate("SignIn");
+      } catch (error) {
+        console.error(error);
+        alert("Error signing up: " + error.message);
+      }
+      alert(`Signed up with Name: ${name}, Email: ${email}`);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Image
+        source={{
+          uri: "https://i.ibb.co/kgvh4Tc/Whats-App-Image-2024-10-20-at-6-21-43-PM.jpg",
+        }} // Replace with your actual logo URL or image source
+        style={styles.logo}
+      />
+      <Text>Sign Up</Text>
+      <TextInput
+        placeholder="Full Name"
+        value={name}
+        onChangeText={setName}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Email Address"
+        value={email}
+        onChangeText={setEmail}
+        style={styles.input}
+        keyboardType="email-address"
+      />
+      <TextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        style={styles.input}
+        secureTextEntry
+      />
+      <Button title="Sign Up" color="green" onPress={handleSignUp} />
+      <Text onPress={() => navigation.navigate("SignIn")} style={styles.link}>
+        Already have an account? Sign In
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 16,
+    backgroundColor: "#fff",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 8,
+    marginBottom: 16,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    marginBottom: 20,
+    marginLeft: 120,
+  },
+  link: { color: "blue", marginTop: 10, textAlign: "center" },
+});

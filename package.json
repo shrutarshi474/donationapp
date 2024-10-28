@@ -1,0 +1,39 @@
+{
+  "name": "donationapp",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-community/datetimepicker": "^8.2.0",
+    "@react-native-firebase/app": "^21.2.0",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/stack": "^6.4.1",
+    "axios": "^1.7.7",
+    "buffer": "^6.0.3",
+    "expo": "~51.0.28",
+    "expo-contacts": "~13.0.5",
+    "expo-location": "~17.0.1",
+    "expo-status-bar": "~1.12.1",
+    "firebase": "^11.0.1",
+    "react": "18.2.0",
+    "react-native": "0.74.5",
+    "react-native-calendar-picker": "^8.0.5",
+    "react-native-datepicker": "^1.7.2",
+    "react-native-maps": "1.14.0",
+    "react-native-modal": "^13.0.1",
+    "react-native-modal-datetime-picker": "^18.0.0",
+    "react-native-picker-select": "^9.3.1",
+    "react-native-safe-area-context": "4.10.5",
+    "react-native-screens": "3.31.1",
+    "react-native-time-picker": "^0.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
+}
